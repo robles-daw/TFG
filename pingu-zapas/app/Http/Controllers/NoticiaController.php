@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class NoticiaController extends Controller
@@ -41,9 +42,11 @@ class NoticiaController extends Controller
             'resumen' => 'nullable|string',
             'contenido' => 'required|string',
             'imagen_portada' => 'nullable|string|max:255',
-            'imagen_portada_file' => 'nullable|image|max:2048',
+            'imagen_portada_file' => 'nullable|image|max:10048',
             'categoria' => 'required|in:lanzamiento,oferta,evento,general',
         ]);
+
+        $data['contenido'] = $this->normalizeContenido($data['contenido']);
 
         $image = $request->input('imagen_portada');
         if ($request->hasFile('imagen_portada_file')) {
@@ -99,6 +102,8 @@ class NoticiaController extends Controller
             'categoria' => 'required|in:lanzamiento,oferta,evento,general',
         ]);
 
+        $data['contenido'] = $this->normalizeContenido($data['contenido']);
+
         $image = $request->input('imagen_portada', $noticia->imagen_portada);
         if ($request->hasFile('imagen_portada_file')) {
             if ($noticia->imagen_portada && !filter_var($noticia->imagen_portada, FILTER_VALIDATE_URL)) {
@@ -132,5 +137,19 @@ class NoticiaController extends Controller
         $noticia->delete();
 
         return redirect()->route('admin.noticias.index')->with('success', 'Noticia eliminada correctamente.');
+    }
+
+    private function normalizeContenido(string $contenido): string
+    {
+        $contenido = trim($contenido);
+        $plainText = trim(html_entity_decode(strip_tags($contenido), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+
+        if ($plainText === '') {
+            throw ValidationException::withMessages([
+                'contenido' => 'El contenido de la noticia no puede estar vacio.',
+            ]);
+        }
+
+        return $contenido;
     }
 }

@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
 
         $admin = User::create([
             'name' => 'Admin Pingu',
-            'email' => 'admin@pinguzapas.local',
+            'email' => 'admin@pinguzapas.com',
             'password' => Hash::make('password'),
             'telefono' => '600100200',
             'direccion' => 'Avenida de la Innovacion 18',

@@ -2,60 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderInvoiceMail;
+use App\Mail\OrderReceivedNotificationMail;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
-use App\Models\Zapatilla;
-use App\Models\Descuento;
 use App\Models\TallaStock;
+use App\Models\Zapatilla;
+use App\Services\CartService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Throwable;
 
 class CheckoutController extends Controller
 {
-    public function index()
+    public function __construct(private readonly CartService $cartService)
     {
-        $cart = Session::get('cart', []);
-        if (empty($cart)) {
-            return redirect()->route('cart.index')->with('error', 'Tu carrito está vacío.');
-        }
-
-        $items = [];
-        $total = 0;
-        foreach ($cart as $id => $details) {
-            $zapatilla = Zapatilla::find($details['id']);
-            if ($zapatilla) {
-                $subtotal = $zapatilla->precio * $details['quantity'];
-                $total += $subtotal;
-                $items[] = [
-                    'id' => $details['id'],
-                    'zapatilla' => $zapatilla,
-                    'talla' => $details['talla'],
-                    'quantity' => $details['quantity'],
-                    'subtotal' => $subtotal
-                ];
-            }
-        }
-
-        $user = Auth::user();
-        $discount = 0;
-        if (Session::has('applied_coupon')) {
-            $coupon = Descuento::find(Session::get('applied_coupon'));
-            if ($coupon && $coupon->isValidForSubtotal($total)) {
-                $discount = $coupon->calculateDiscount($total);
-            }
-        }
-
-        return view('cart.checkout', compact('items', 'total', 'discount', 'user'));
     }
 
-    public function process(Request $request)
+    public function index()
     {
-        $cart = Session::get('cart', []);
-        if (empty($cart)) {
+        $summary = $this->cartService->buildSummary();
+
+        if (empty($summary['items'])) {
             return redirect()->route('cart.index')->with('error', 'Tu carrito está vacío.');
+        }
+
+        if ($summary['hasStockIssues']) {
+            return redirect()->route('cart.index')->with('error', 'Hay productos sin stock suficiente en tu carrito. Revísalo antes de pagar.');
+        }
+
+        return view('cart.checkout', [
+            'items' => $summary['items'],
+            'total' => $summary['total'],
+            'discount' => $summary['discount'],
+            'user' => Auth::user(),
+        ]);
+    }
+
+    public function process(Request $request): RedirectResponse
+    {
+        $summary = $this->cartService->buildSummary();
+
+        if (empty($summary['items'])) {
+            return redirect()->route('cart.index')->with('error', 'Tu carrito está vacío.');
+        }
+
+        if ($summary['hasStockIssues']) {
+            return redirect()->route('cart.index')->with('error', 'No puedes tramitar el pedido mientras haya productos sin stock suficiente.');
         }
 
         $request->validate([
@@ -68,20 +66,18 @@ class CheckoutController extends Controller
             'metodo_pago' => 'required|string|max:255',
         ]);
 
-        return DB::transaction(function () use ($request, $cart) {
+        $pedido = DB::transaction(function () use ($request, $summary) {
             $total = 0;
             $itemsToProcess = [];
 
-            foreach ($cart as $id => $details) {
+            foreach ($summary['items'] as $details) {
                 $zapatilla = Zapatilla::findOrFail($details['id']);
-                
-                // Check stock
                 $stock = TallaStock::where('zapatilla_id', $zapatilla->id)
                     ->where('talla', $details['talla'])
                     ->first();
 
-                if (!$stock || $stock->stock < $details['quantity']) {
-                    throw new \Exception("Stock insuficiente para: " . $zapatilla->nombre . " talla " . $details['talla']);
+                if (! $stock || $stock->stock < $details['quantity']) {
+                    throw new \Exception('Stock insuficiente para: ' . $zapatilla->nombre . ' talla ' . $details['talla']);
                 }
 
                 $subtotal = $zapatilla->precio * $details['quantity'];
@@ -91,32 +87,23 @@ class CheckoutController extends Controller
                     'talla' => $details['talla'],
                     'cantidad' => $details['quantity'],
                     'precio_unitario' => $zapatilla->precio,
-                    'subtotal' => $subtotal
+                    'subtotal' => $subtotal,
                 ];
             }
 
-            $gastosEnvio = $total > 150 ? 0 : 9.99;
-            
-            $discount = 0;
-            $descuento_id = null;
-            if (Session::has('applied_coupon')) {
-                $coupon = Descuento::find(Session::get('applied_coupon'));
-                if ($coupon && $coupon->isValidForSubtotal($total)) {
-                    $descuento_id = $coupon->id;
-                    $discount = $coupon->calculateDiscount($total);
-                    $coupon->increment('usos_actuales');
-                }
+            if ($summary['appliedCoupon']) {
+                $summary['appliedCoupon']->increment('usos_actuales');
             }
 
             $pedido = Pedido::create([
                 'user_id' => Auth::id(),
-                'descuento_id' => $descuento_id,
+                'descuento_id' => $summary['appliedCoupon']?->id,
                 'numero_pedido' => 'PED-' . strtoupper(Str::random(10)),
                 'estado' => 'pendiente',
                 'subtotal' => $total,
-                'descuento_aplicado' => $discount,
-                'gastos_envio' => $gastosEnvio,
-                'total' => ($total - $discount) + $gastosEnvio,
+                'descuento_aplicado' => $summary['discount'],
+                'gastos_envio' => $summary['shipping'],
+                'total' => ($total - $summary['discount']) + $summary['shipping'],
                 'nombre_envio' => $request->nombre_envio,
                 'direccion_envio' => $request->direccion_envio,
                 'ciudad_envio' => $request->ciudad_envio,
@@ -131,16 +118,41 @@ class CheckoutController extends Controller
                 $itemData['pedido_id'] = $pedido->id;
                 PedidoItem::create($itemData);
 
-                // Reduce stock
                 TallaStock::where('zapatilla_id', $itemData['zapatilla_id'])
                     ->where('talla', $itemData['talla'])
                     ->decrement('stock', $itemData['cantidad']);
             }
 
-            Session::forget('cart');
-            Session::forget('applied_coupon');
+            session()->forget('cart');
+            session()->forget('applied_coupon');
 
-            return redirect()->route('pedidos.show', $pedido)->with('success', 'Pedido realizado correctamente.');
+            return $pedido;
         });
+
+        $pedido->load(['items.zapatilla', 'user']);
+        $this->sendOrderEmails($pedido);
+
+        return redirect()->route('pedidos.show', $pedido)->with('success', 'Pedido realizado correctamente.');
+    }
+
+    private function sendOrderEmails(Pedido $pedido): void
+    {
+        try {
+            $notificationRecipient = config('mail.order_notification_to');
+
+            if (! empty($notificationRecipient)) {
+                Mail::to($notificationRecipient)->send(new OrderReceivedNotificationMail($pedido));
+            }
+
+            if (! empty($pedido->user?->email)) {
+                Mail::to($pedido->user->email)->send(new OrderInvoiceMail($pedido));
+            }
+        } catch (Throwable $exception) {
+            Log::warning('No se pudieron enviar los emails del pedido.', [
+                'pedido_id' => $pedido->id,
+                'numero_pedido' => $pedido->numero_pedido,
+                'error' => $exception->getMessage(),
+            ]);
+        }
     }
 }

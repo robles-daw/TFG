@@ -77,6 +77,11 @@
                                 @if($zapatilla->destacado)
                                     <span style="position: absolute; top: 12px; right: 12px; background: var(--accent); color: white; padding: 4px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 700;">DESTACADO</span>
                                 @endif
+                                @if($zapatilla->tallasStock->where('stock', '>', 0)->isEmpty())
+                                    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 2;">
+                                        <span style="background: white; color: black; padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 0.9rem; letter-spacing: 1px;">SIN STOCK</span>
+                                    </div>
+                                @endif
                             </div>
                             <div style="padding: 0 4px;">
                                 <span class="badge" style="font-size: 0.75rem; margin-bottom: 8px;">{{ $zapatilla->categoria->nombre }}</span>

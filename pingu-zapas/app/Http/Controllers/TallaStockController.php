@@ -12,7 +12,7 @@ class TallaStockController extends Controller
     {
         $request->validate([
             'talla' => 'required|numeric',
-            'stock' => 'required|integer|min:0'
+            'stock' => 'required|integer|min:0',
         ]);
 
         TallaStock::updateOrCreate(
@@ -26,6 +26,7 @@ class TallaStockController extends Controller
     public function destroy(TallaStock $tallaStock)
     {
         $tallaStock->delete();
+
         return redirect()->back()->with('success', 'Talla eliminada del inventario.');
     }
 }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\StockAlertSubscription;
 use App\Models\Zapatilla;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -135,6 +137,16 @@ class ZapatillaController extends Controller
     public function show(Zapatilla $zapatilla): View
     {
         $zapatilla->load(['categoria', 'tallasStock']);
+        $subscribedSizes = [];
+
+        if (Auth::check()) {
+            $subscribedSizes = StockAlertSubscription::where('user_id', Auth::id())
+                ->where('zapatilla_id', $zapatilla->id)
+                ->pluck('talla')
+                ->map(fn ($talla) => number_format((float) $talla, 1, '.', ''))
+                ->all();
+        }
+
         $relacionadas = Zapatilla::with('categoria')
             ->where('activo', true)
             ->where('categoria_id', $zapatilla->categoria_id)
@@ -142,7 +154,7 @@ class ZapatillaController extends Controller
             ->take(4)
             ->get();
 
-        return view('zapatillas.show', compact('zapatilla', 'relacionadas'));
+        return view('zapatillas.show', compact('zapatilla', 'relacionadas', 'subscribedSizes'));
     }
 
     public function edit(Zapatilla $zapatilla): View
@@ -170,7 +182,7 @@ class ZapatillaController extends Controller
 
         $mainImage = $request->input('imagen_principal', $zapatilla->imagen_principal);
         if ($request->hasFile('imagen_principal_file')) {
-            if ($zapatilla->imagen_principal && !filter_var($zapatilla->imagen_principal, FILTER_VALIDATE_URL)) {
+            if ($zapatilla->imagen_principal && ! filter_var($zapatilla->imagen_principal, FILTER_VALIDATE_URL)) {
                 Storage::disk('public')->delete($zapatilla->imagen_principal);
             }
             $mainImage = $request->file('imagen_principal_file')->store('zapatillas', 'public');
@@ -201,12 +213,12 @@ class ZapatillaController extends Controller
 
     public function destroy(Zapatilla $zapatilla): RedirectResponse
     {
-        if ($zapatilla->imagen_principal && !filter_var($zapatilla->imagen_principal, FILTER_VALIDATE_URL)) {
+        if ($zapatilla->imagen_principal && ! filter_var($zapatilla->imagen_principal, FILTER_VALIDATE_URL)) {
             Storage::disk('public')->delete($zapatilla->imagen_principal);
         }
 
         foreach ($zapatilla->imagenes_extra ?? [] as $img) {
-            if (!filter_var($img, FILTER_VALIDATE_URL)) {
+            if (! filter_var($img, FILTER_VALIDATE_URL)) {
                 Storage::disk('public')->delete($img);
             }
         }

@@ -40,6 +40,7 @@ return [
         'smtp' => [
             'transport' => 'smtp',
             'scheme' => env('MAIL_SCHEME'),
+            'encryption' => env('MAIL_ENCRYPTION'),
             'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', '127.0.0.1'),
             'port' => env('MAIL_PORT', 2525),
@@ -114,5 +115,9 @@ return [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
+
+    'order_notification_to' => env('MAIL_ORDER_NOTIFICATION_TO', env('MAIL_FROM_ADDRESS', 'hello@example.com')),
+
+    'contact_notification_to' => env('MAIL_CONTACT_NOTIFICATION_TO', env('MAIL_FROM_ADDRESS', 'hello@example.com')),
 
 ];

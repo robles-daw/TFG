@@ -29,4 +29,10 @@ class TallaStock extends Model
     {
         return $this->belongsTo(Zapatilla::class);
     }
+
+    public function stockAlertSubscriptions()
+    {
+        return $this->hasMany(StockAlertSubscription::class, 'zapatilla_id', 'zapatilla_id')
+            ->where('talla', $this->talla);
+    }
 }

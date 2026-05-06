@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <h1 class="page-title">Tu Carrito</h1>
-        
+
         @if(count($items) > 0)
             <div class="catalog-layout" style="grid-template-columns: 1fr 340px;">
                 <div class="panel" style="padding: 0; overflow: hidden;">
@@ -33,7 +33,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{ $item['talla'] }}</td>
+                                        <td>{{ (float) $item['talla'] }}</td>
                                         <td>{{ number_format($item['zapatilla']->precio, 2) }} €</td>
                                         <td>
                                             <form action="{{ route('cart.update') }}" method="POST" style="display: flex; gap: 6px; align-items: center;">
@@ -45,7 +45,31 @@
                                                 </button>
                                             </form>
                                         </td>
-                                        <td><strong>{{ number_format($item['subtotal'], 2) }} €</strong></td>
+                                        <td>
+                                            <strong>{{ number_format($item['subtotal'], 2) }} €</strong>
+
+                                            @if($item['has_stock_issue'])
+                                                <div style="margin-top: 8px; color: var(--danger); font-size: 0.85rem; font-weight: 600;">
+                                                    {{ $item['stock_issue_message'] }}
+                                                </div>
+
+                                                @if($item['available_stock'] <= 0)
+                                                    @if($item['already_subscribed'])
+                                                        <div class="muted" style="margin-top: 8px; font-size: 0.8rem;">
+                                                            Ya te avisaremos por correo cuando vuelva.
+                                                        </div>
+                                                    @else
+                                                        <form action="{{ route('stock-alerts.store', $item['zapatilla']) }}" method="POST" style="margin-top: 10px;">
+                                                            @csrf
+                                                            <input type="hidden" name="talla" value="{{ $item['talla'] }}">
+                                                            <button type="submit" class="btn btn-ghost" style="padding: 6px 10px; font-size: 0.78rem;">
+                                                                <i class="fas fa-envelope"></i> Avisarme cuando repongan
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                @endif
+                                            @endif
+                                        </td>
                                         <td>
                                             <form action="{{ route('cart.remove') }}" method="POST">
                                                 @csrf
@@ -65,6 +89,13 @@
                 <aside>
                     <div class="panel" style="padding: 24px;">
                         <h3>Resumen</h3>
+
+                        @if($hasStockIssues)
+                            <div class="flash flash-error" style="margin-bottom: 16px;">
+                                Tienes productos sin stock suficiente en el carrito. No podrás tramitar el pedido hasta quitarlos o esperar a que haya stock otra vez.
+                            </div>
+                        @endif
+
                         <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
                             <span class="muted">Subtotal</span>
                             <strong>{{ number_format($total, 2) }} €</strong>
@@ -79,7 +110,7 @@
 
                         <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
                             <span class="muted">Envío</span>
-                            <span>{{ $total > 150 ? 'Gratis' : '9.99 €' }}</span>
+                            <span>{{ $shipping == 0 ? 'Gratis' : number_format($shipping, 2) . ' €' }}</span>
                         </div>
 
                         @if($appliedCoupon)
@@ -102,11 +133,19 @@
                         <hr style="border: none; border-top: 1px solid var(--line); margin: 16px 0;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 24px; font-size: 1.4rem;">
                             <span>Total</span>
-                            <strong class="text-accent">{{ number_format(($total - $discount) + ($total > 150 ? 0 : 9.99), 2) }} €</strong>
+                            <strong class="text-accent">{{ number_format($grandTotal, 2) }} €</strong>
                         </div>
-                        <a href="{{ route('checkout.index') }}" class="btn btn-primary" style="width: 100%;">Tramitar Pedido</a>
+
+                        @if($hasStockIssues)
+                            <button type="button" class="btn btn-primary" style="width: 100%; opacity: 0.55; cursor: not-allowed;" disabled>
+                                Tramitar Pedido
+                            </button>
+                        @else
+                            <a href="{{ route('checkout.index') }}" class="btn btn-primary" style="width: 100%;">Tramitar Pedido</a>
+                        @endif
+
                         <p class="muted" style="font-size: 0.8rem; margin-top: 12px; text-align: center;">
-                            Envío gratuito para pedidos superiores a 150€
+                            Envío gratuito para pedidos superiores a 150 €
                         </p>
                     </div>
                 </aside>

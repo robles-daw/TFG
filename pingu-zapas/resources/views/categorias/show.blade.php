@@ -24,6 +24,11 @@
                     <a class="product-card" href="{{ route('zapatillas.show', $zapatilla) }}">
                         <div class="product-image">
                             <img src="{{ $zapatilla->main_image_url }}" alt="{{ $zapatilla->nombre }}">
+                            @if($zapatilla->tallasStock->where('stock', '>', 0)->isEmpty())
+                                <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 2;">
+                                    <span style="background: white; color: black; padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 0.7rem; letter-spacing: 1px;">SIN STOCK</span>
+                                </div>
+                            @endif
                         </div>
                         <h3>{{ $zapatilla->nombre }}</h3>
                         <p class="muted">{{ number_format($zapatilla->precio, 2) }} €</p>

@@ -6,7 +6,6 @@
     <div class="container">
         <section class="hero">
             <div>
-                <span class="badge">Catalogo funcional conectado a BD</span>
                 <h1>Filtros, categorias y usuarios listos para moverse con datos reales.</h1>
                 <p>El catalogo arranca con seeders de marcas ficticias, tallas con stock, noticias y pedidos de ejemplo para que puedas enseñar una tienda completa sin meter marcas reales.</p>
                 <div class="hero-actions">
@@ -54,6 +53,11 @@
                     <a class="product-card" href="{{ route('zapatillas.show', $zapatilla) }}">
                         <div class="product-image">
                             <img src="{{ $zapatilla->imagen_principal }}" alt="{{ $zapatilla->nombre }}">
+                            @if($zapatilla->tallasStock->where('stock', '>', 0)->isEmpty())
+                                <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 2;">
+                                    <span style="background: white; color: black; padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 0.7rem; letter-spacing: 1px;">SIN STOCK</span>
+                                </div>
+                            @endif
                         </div>
                         <span class="badge">{{ $zapatilla->categoria->nombre }}</span>
                         <h3>{{ $zapatilla->nombre }}</h3>
@@ -74,12 +78,14 @@
             <div class="news-grid">
                 @foreach($noticias as $noticia)
                     <a class="news-card" href="{{ route('noticias.show', $noticia->slug) }}">
-                        <div class="news-cover">
+                        <div class="news-cover" style="background-image: url('{{ $noticia->imagen_portada }}');">
                             <img src="{{ $noticia->imagen_portada }}" alt="{{ $noticia->titulo }}">
                         </div>
-                        <span class="badge">{{ ucfirst($noticia->categoria) }}</span>
-                        <h3>{{ $noticia->titulo }}</h3>
-                        <p class="muted">{{ $noticia->resumen }}</p>
+                        <div class="news-card-content">
+                            <span class="badge" style="margin-bottom: 12px;">{{ ucfirst($noticia->categoria) }}</span>
+                            <h3 style="margin-top: 0;">{{ $noticia->titulo }}</h3>
+                            <p class="muted" style="margin-bottom: 0;">{{ $noticia->resumen }}</p>
+                        </div>
                     </a>
                 @endforeach
             </div>

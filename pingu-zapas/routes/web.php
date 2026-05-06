@@ -8,7 +8,9 @@ use App\Http\Controllers\DescuentoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StockAlertSubscriptionController;
 use App\Http\Controllers\TallaStockController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ZapatillaController;
@@ -30,6 +32,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.store');
+    Route::get('/forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
 });
 
 Route::middleware('auth')->group(function () {
@@ -45,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/carrito/update', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
     Route::post('/carrito/coupon', [App\Http\Controllers\CartController::class, 'applyCoupon'])->name('cart.coupon.apply');
     Route::post('/carrito/coupon/remove', [App\Http\Controllers\CartController::class, 'removeCoupon'])->name('cart.coupon.remove');
+    Route::post('/zapatillas/{zapatilla}/avisos-stock', [StockAlertSubscriptionController::class, 'store'])->name('stock-alerts.store');
 
     // Checkout
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout.index');

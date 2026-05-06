@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMessageConfirmationMail;
+use App\Mail\ContactMessageReceivedMail;
 use App\Models\Contacto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use Throwable;
 
 class ContactoController extends Controller
 {
@@ -28,8 +33,28 @@ class ContactoController extends Controller
             $data['asunto'] = 'Mensaje de contacto';
         }
 
-        Contacto::create($data);
+        $contacto = Contacto::create($data);
+        $this->sendContactEmails($contacto);
 
-        return redirect()->back()->with('success', '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.');
+        return redirect()->back()->with('success', 'Mensaje enviado con exito. Hemos enviado una confirmacion a tu correo.');
+    }
+
+    private function sendContactEmails(Contacto $contacto): void
+    {
+        try {
+            $notificationRecipient = config('mail.contact_notification_to');
+
+            if (!empty($notificationRecipient)) {
+                Mail::to($notificationRecipient)->send(new ContactMessageReceivedMail($contacto));
+            }
+
+            Mail::to($contacto->email)->send(new ContactMessageConfirmationMail($contacto));
+        } catch (Throwable $exception) {
+            Log::warning('No se pudieron enviar los emails del formulario de contacto.', [
+                'contacto_id' => $contacto->id,
+                'email' => $contacto->email,
+                'error' => $exception->getMessage(),
+            ]);
+        }
     }
 }

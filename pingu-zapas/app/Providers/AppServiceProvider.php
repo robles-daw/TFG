@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\TallaStock;
+use App\Observers\TallaStockObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,5 +24,7 @@ class AppServiceProvider extends ServiceProvider
         if (str_starts_with(config('app.url'), 'https://')) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
+
+        TallaStock::observe(TallaStockObserver::class);
     }
 }

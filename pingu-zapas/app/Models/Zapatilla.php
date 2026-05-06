@@ -72,4 +72,9 @@ class Zapatilla extends Model
     {
         return $this->hasMany(PedidoItem::class, 'zapatilla_id');
     }
+
+    public function stockAlertSubscriptions()
+    {
+        return $this->hasMany(StockAlertSubscription::class, 'zapatilla_id');
+    }
 }

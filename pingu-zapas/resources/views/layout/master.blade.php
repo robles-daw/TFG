@@ -33,9 +33,6 @@
                     @if(auth()->user()->rol === 'admin')
                         <div style="width: 1px; height: 20px; background: var(--line); margin: 0 8px;"></div>
                         <a href="{{ route('admin.dashboard') }}" style="color: var(--accent);">Dashboard</a>
-                        <a href="{{ route('admin.zapatillas.index') }}">Productos</a>
-                        <a href="{{ route('admin.categorias.index') }}">Categorias</a>
-                        <a href="{{ route('admin.pedidos.index') }}">Pedidos</a>
                     @else
                         <a href="{{ route('perfil.index') }}">Perfil</a>
                     @endif
@@ -69,6 +66,10 @@
         <div class="container flash-stack">
             @if(session('success'))
                 <div class="flash flash-success">{{ session('success') }}</div>
+            @endif
+
+            @if(session('error'))
+                <div class="flash flash-error">{{ session('error') }}</div>
             @endif
 
             @if($errors->any())

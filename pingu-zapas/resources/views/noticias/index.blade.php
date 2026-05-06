@@ -13,11 +13,15 @@
         <div class="news-grid">
             @foreach($noticias as $noticia)
                 <a class="news-card" href="{{ route('noticias.show', $noticia->slug) }}">
-                    <div class="news-cover"><img src="{{ $noticia->image_url }}" alt="{{ $noticia->titulo }}"></div>
-                    <span class="badge">{{ ucfirst($noticia->categoria) }}</span>
-                    <h3>{{ $noticia->titulo }}</h3>
-                    <p class="muted">{{ $noticia->resumen }}</p>
-                    <small class="muted">Por {{ $noticia->autor->name }} · {{ optional($noticia->publicado_en)->format('d/m/Y') }}</small>
+                    <div class="news-cover" style="background-image: url('{{ $noticia->image_url }}');">
+                        <img src="{{ $noticia->image_url }}" alt="{{ $noticia->titulo }}">
+                    </div>
+                    <div class="news-card-content">
+                        <span class="badge" style="margin-bottom: 12px;">{{ ucfirst($noticia->categoria) }}</span>
+                        <h3 style="margin-top: 0;">{{ $noticia->titulo }}</h3>
+                        <p class="muted" style="margin-bottom: 8px;">{{ $noticia->resumen }}</p>
+                        <small class="muted">Por {{ $noticia->autor->name }} · {{ optional($noticia->publicado_en)->format('d/m/Y') }}</small>
+                    </div>
                 </a>
             @endforeach
         </div>
