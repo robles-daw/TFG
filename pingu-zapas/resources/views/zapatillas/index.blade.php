@@ -102,7 +102,7 @@
                     @endforelse
                 </div>
 
-                <div class="pagination" style="margin-top: 40px;">{{ $zapatillas->links() }}</div>
+                <div style="margin-top: 40px;">{{ $zapatillas->links() }}</div>
             </div>
         </div>
     </div>

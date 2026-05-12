@@ -126,6 +126,18 @@ class CheckoutController extends Controller
             session()->forget('cart');
             session()->forget('applied_coupon');
 
+            // Guardar dirección en el perfil del usuario si no tiene una
+            $user = Auth::user();
+            if ($user && empty($user->direccion)) {
+                $user->update([
+                    'direccion' => $request->direccion_envio,
+                    'ciudad' => $request->ciudad_envio,
+                    'codigo_postal' => $request->codigo_postal_envio,
+                    'pais' => $request->pais_envio,
+                    'telefono' => $request->telefono_contacto,
+                ]);
+            }
+
             return $pedido;
         });
 

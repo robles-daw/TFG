@@ -25,6 +25,6 @@
                 </a>
             @endforeach
         </div>
-        <div class="pagination">{{ $noticias->links() }}</div>
+        <div style="margin-top: 40px;">{{ $noticias->links() }}</div>
     </div>
 @endsection

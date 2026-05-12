@@ -73,7 +73,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="pagination">{{ $pedidos->links() }}</div>
+        <div style="margin-top: 24px;">{{ $pedidos->links() }}</div>
     </div>
 
     <script>

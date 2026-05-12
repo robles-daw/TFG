@@ -577,10 +577,73 @@ th {
     .footer-bottom { flex-direction: column; gap: 16px; }
 }
 
+.pagination-nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 22px;
+    list-style: none;
+    padding: 0;
+    margin: 40px 0 0;
+    gap: 8px;
+}
+
+.pagination .page-item .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 12px;
+    background: var(--panel-alt);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+    border-radius: 12px;
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+}
+
+.pagination .page-item.disabled .page-link {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: transparent;
+}
+
+.pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent);
+    color: var(--text);
+    transform: translateY(-2px);
+}
+
+/* Fix for the "Showing X to Y of Z results" text that Bootstrap 5 might include */
+.pagination-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.pagination-info {
+    color: var(--muted);
+    font-size: 0.9rem;
 }
 
 /* Responsive Design Refactor */

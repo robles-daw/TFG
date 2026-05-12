@@ -28,7 +28,7 @@
                     @else
                         <p class="muted">No has guardado una dirección de envío todavía.</p>
                     @endif
-                    <a href="#" class="btn btn-ghost" style="margin-top: 20px; width: 100%;">Editar Perfil</a>
+                    <a href="{{ route('perfil.edit') }}" class="btn btn-ghost" style="margin-top: 20px; width: 100%;">Editar Perfil</a>
                 </section>
 
                 <section class="panel" style="padding: 28px;">

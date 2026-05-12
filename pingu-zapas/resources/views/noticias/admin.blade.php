@@ -58,6 +58,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="pagination">{{ $noticias->links() }}</div>
+        <div style="margin-top: 24px;">{{ $noticias->links() }}</div>
     </div>
 @endsection
