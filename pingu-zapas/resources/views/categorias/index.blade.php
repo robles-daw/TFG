@@ -7,7 +7,7 @@
         <div class="page-header">
             <div>
                 <h1 class="page-title">Categorias</h1>
-                <p class="page-subtitle">Listado construido desde la tabla `categorias`.</p>
+                <p class="page-subtitle">Explora nuestras colecciones y descubre tu estilo propio.</p>
             </div>
         </div>
 
@@ -24,6 +24,6 @@
             @endforeach
         </div>
 
-        <div class="pagination">{{ $categorias->links() }}</div>
+        <div style="margin-top: 40px;">{{ $categorias->links() }}</div>
     </div>
 @endsection

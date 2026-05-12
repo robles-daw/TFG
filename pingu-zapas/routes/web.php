@@ -41,6 +41,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/perfil', [ProfileController::class, 'index'])->name('perfil.index');
+    Route::get('/perfil/editar', [ProfileController::class, 'edit'])->name('perfil.edit');
+    Route::put('/perfil', [ProfileController::class, 'update'])->name('perfil.update');
     Route::get('/mis-pedidos', [PedidoController::class, 'misPedidos'])->name('pedidos.mis_pedidos');
     Route::get('/pedidos/{pedido}', [PedidoController::class, 'show'])->name('pedidos.show');
 

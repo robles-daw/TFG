@@ -7,7 +7,7 @@
         <div class="page-header">
             <div>
                 <h1 class="page-title">Catalogo</h1>
-                <p class="page-subtitle">Filtros y conteos alimentados por la base de datos.</p>
+                <p class="page-subtitle">Encuentra el par perfecto entre nuestra selección exclusiva.</p>
             </div>
         </div>
 
@@ -102,7 +102,7 @@
                     @endforelse
                 </div>
 
-                <div class="pagination" style="margin-top: 40px;">{{ $zapatillas->links() }}</div>
+                <div style="margin-top: 40px;">{{ $zapatillas->links() }}</div>
             </div>
         </div>
     </div>
