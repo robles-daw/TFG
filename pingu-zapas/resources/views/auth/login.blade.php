@@ -3,6 +3,10 @@
 @section('title', 'Entrar | Pingu Zapas')
 
 @section('content')
+    @php
+        $cookiesAceptadas = request()->cookie('cookieConsent') === 'accepted';
+    @endphp
+
     <div class="container auth-shell">
         <div class="auth-card">
             <h1 class="page-title" style="font-size: 2.4rem;">Iniciar sesion</h1>
@@ -22,9 +26,12 @@
                     <a href="{{ route('password.request') }}" class="muted" style="font-size: 0.95rem;">He olvidado mi contrasena</a>
                 </div>
                 <label class="checkbox-row">
-                    <input type="checkbox" name="remember" value="1">
-                    <span>Recordarme</span>
+                    <input type="checkbox" name="remember" value="1" @checked(old('remember') || $cookiesAceptadas)>
+                    <span>Recordarme en este navegador</span>
                 </label>
+                <p class="muted" style="margin: -6px 0 0; font-size: 0.9rem;">
+                    Si aceptaste las cookies, guardaremos tu perfil para no pedirte iniciar sesion en cada visita.
+                </p>
                 <button type="submit" class="btn btn-primary">Entrar</button>
             </form>
         </div>
