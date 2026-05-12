@@ -4,17 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Pingu Zapas')</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/modern.css') }}">
-<<<<<<< HEAD
-
-=======
     <link rel="icon" href="{{ asset('img/logoZapas.png') }}?v=2" type="image/png">
->>>>>>> 89f88fa14957b6ac8a74246c3627e46c3449bd0f
     @stack('styles')
     <style>
         .cookies {
@@ -124,23 +119,34 @@
         }
     </style>
 </head>
-
 <body>
+    <nav class="navbar">
+        <div class="container nav-shell">
+            <a href="{{ route('index') }}" class="nav-brand">
+                <img src="{{ asset('img/logoZapas.png') }}" alt="Pingu Zapas">
+                Pingu<span>Zapas</span>
+            </a>
 
-<nav class="navbar">
-    <div class="container nav-shell">
-        <a href="{{ route('index') }}" class="nav-brand">
-            <img src="{{ asset('img/logoZapas.png') }}" alt="Pingu Zapas">
-            Pingu<span>Zapas</span>
-        </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
 
-        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
-            <i class="fas fa-bars"></i>
-        </button>
+            <div class="nav-links">
+                <a href="{{ route('index') }}">Inicio</a>
+                <a href="{{ route('zapatillas.index') }}">Catalogo</a>
+                <a href="{{ route('categorias.index') }}">Categorias</a>
+                <a href="{{ route('noticias.index') }}">Noticias</a>
+                <a href="{{ route('contacto.index') }}">Contacto</a>
+                @auth
+                    @if(auth()->user()->rol === 'admin')
+                        <div style="width: 1px; height: 20px; background: var(--line); margin: 0 8px;"></div>
+                        <a href="{{ route('admin.dashboard') }}" style="color: var(--accent);">Dashboard</a>
+                    @else
+                        <a href="{{ route('perfil.index') }}">Perfil</a>
+                    @endif
+                @endauth
+            </div>
 
-<<<<<<< HEAD
-        <div class="nav-links">
-=======
             <div class="nav-icons">
                 <a href="{{ route('cart.index') }}" class="nav-cart" style="position: relative;">
                     <i class="fas fa-shopping-cart"></i>
@@ -236,139 +242,66 @@
             <button class="menu-close" id="menuClose"><i class="fas fa-times"></i></button>
         </div>
         <div class="mobile-menu-links">
->>>>>>> 89f88fa14957b6ac8a74246c3627e46c3449bd0f
             <a href="{{ route('index') }}">Inicio</a>
-            <a href="{{ route('zapatillas.index') }}">Catalogo</a>
-            <a href="{{ route('categorias.index') }}">Categorias</a>
+            <a href="{{ route('zapatillas.index') }}">Catálogo</a>
+            <a href="{{ route('categorias.index') }}">Categorías</a>
             <a href="{{ route('noticias.index') }}">Noticias</a>
-            <a href="{{ route('contacto.index') }}">Contacto</a>
-
+            <hr style="border: 0; border-top: 1px solid var(--line); margin: 8px 0;">
             @auth
                 @if(auth()->user()->rol === 'admin')
-                    <div style="width: 1px; height: 20px; background: var(--line); margin: 0 8px;"></div>
-                    <a href="{{ route('admin.dashboard') }}" style="color: var(--accent);">Dashboard</a>
+                    <a href="{{ route('admin.dashboard') }}" style="color: var(--accent);">Panel Admin</a>
+                    <a href="{{ route('admin.zapatillas.index') }}">Gestionar Productos</a>
+                    <a href="{{ route('admin.categorias.index') }}">Gestionar Categorías</a>
+                    <a href="{{ route('admin.pedidos.index') }}">Gestionar Pedidos</a>
                 @else
-                    <a href="{{ route('perfil.index') }}">Perfil</a>
+                    <a href="{{ route('perfil.index') }}">Mi Perfil</a>
                 @endif
-            @endauth
-        </div>
-
-        <div class="nav-icons">
-            <a href="{{ route('cart.index') }}" class="nav-cart" style="position: relative;">
-                <i class="fas fa-shopping-cart"></i>
-
-                @if(count(session('cart', [])) > 0)
-                    <span class="badge" style="position: absolute; top: -10px; right: -12px; padding: 2px 6px; font-size: 0.7rem; background: var(--accent); color: white;">
-                        {{ count(session('cart', [])) }}
-                    </span>
-                @endif
-            </a>
-
-            @auth
-                <span class="nav-user">{{ auth()->user()->name }}</span>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" style="margin-top: 8px;">
                     @csrf
-                    <button type="submit" class="nav-link-button">Salir</button>
+                    <button type="submit" class="btn btn-ghost" style="width: 100%;">Cerrar Sesión</button>
                 </form>
             @else
-                <a href="{{ route('login') }}">Entrar</a>
-                <a href="{{ route('register') }}">Registro</a>
+                <a href="{{ route('login') }}">Iniciar Sesión</a>
+                <a href="{{ route('register') }}" class="btn btn-primary" style="margin-top: 8px;">Crear Cuenta</a>
             @endauth
         </div>
     </div>
-</nav>
 
-<main class="page-main">
-    <div class="container flash-stack">
-        @if(session('success'))
-            <div class="flash flash-success">{{ session('success') }}</div>
-        @endif
-
-        @if(session('error'))
-            <div class="flash flash-error">{{ session('error') }}</div>
-        @endif
-
-        @if($errors->any())
-            <div class="flash flash-error">
-                {{ $errors->first() }}
-            </div>
-        @endif
-    </div>
-
-    @yield('content')
-</main>
-
-<footer class="site-footer">
-    <div class="container footer-grid">
-        <div class="footer-info">
-            <div class="footer-brand">
-                <img src="{{ asset('img/logoZapas.png') }}" alt="Pingu Zapas">
-                Pingu<span>Zapas</span>
-            </div>
-            <p>Tu destino premium para sneakers de edicion limitada y lanzamientos exclusivos.</p>
-        </div>
-    </div>
-</footer>
-
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-        <div class="nav-brand">
-            <img src="{{ asset('img/logoZapas.png') }}" alt="Pingu Zapas">
-            Pingu<span>Zapas</span>
-        </div>
-        <button class="menu-close" id="menuClose"><i class="fas fa-times"></i></button>
-    </div>
-
-    <div class="mobile-menu-links">
-        <a href="{{ route('index') }}">Inicio</a>
-        <a href="{{ route('zapatillas.index') }}">Catalogo</a>
-        <a href="{{ route('categorias.index') }}">Categorias</a>
-        <a href="{{ route('noticias.index') }}">Noticias</a>
-    </div>
-</div>
-
-<!-- COOKIE BANNER -->
-<section id="cookies" class="cookies" aria-live="polite">
-    <h2>Cookies en Pingu Zapas</h2>
-    <p>
-        Usamos cookies necesarias para mantener tu sesion y, si aceptas, recordar tu perfil para que no tengas que iniciar sesion cada vez.
-    </p>
-
-    <div id="infoCookies" class="cookies-info">
+    <section id="cookies" class="cookies" aria-live="polite">
+        <h2>Cookies en Pingu Zapas</h2>
         <p>
-            Las cookies de sesion mantienen tu carrito, tu acceso y la seguridad de la cuenta. Si aceptas, tambien podremos guardar una cookie de recuerdo de Laravel para mantener tu perfil activo durante mas tiempo en este navegador.
+            Usamos cookies necesarias para mantener tu sesion y, si aceptas, recordar tu perfil para que no tengas que iniciar sesion cada vez.
         </p>
-        <ul>
-            <li>No vendemos tus datos personales.</li>
-            <li>Puedes rechazar cookies opcionales y seguir navegando.</li>
-            <li>Si cierras sesion manualmente, el recuerdo de acceso se elimina.</li>
-        </ul>
-    </div>
 
-    <div class="cookies-botones">
-        <button type="button" id="btnInfoCookies" class="btn-cookies" aria-expanded="false" aria-controls="infoCookies">Mas informacion</button>
-        <button type="button" id="btnRechazarCookies" class="btn-cookies">Rechazar</button>
-        <button type="button" id="btnAceptarCookies" class="btn-aceptar-cookies">Aceptar</button>
-    </div>
-</section>
+        <div id="infoCookies" class="cookies-info">
+            <p>
+                Las cookies de sesion mantienen tu carrito, tu acceso y la seguridad de la cuenta. Si aceptas, tambien podremos guardar una cookie de recuerdo para mantener tu perfil activo durante mas tiempo en este navegador.
+            </p>
+            <ul>
+                <li>No vendemos tus datos personales.</li>
+                <li>Puedes rechazar cookies opcionales y seguir navegando.</li>
+                <li>Si cierras sesion manualmente, el recuerdo de acceso se elimina.</li>
+            </ul>
+        </div>
 
-<!-- SCRIPTS -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
+        <div class="cookies-botones">
+            <button type="button" id="btnInfoCookies" class="btn-cookies" aria-expanded="false" aria-controls="infoCookies">Mas informacion</button>
+            <button type="button" id="btnRechazarCookies" class="btn-cookies">Rechazar</button>
+            <button type="button" id="btnAceptarCookies" class="btn-aceptar-cookies">Aceptar</button>
+        </div>
+    </section>
+
+    <script>
         const menuToggle = document.getElementById('menuToggle');
         const menuClose = document.getElementById('menuClose');
         const mobileMenu = document.getElementById('mobileMenu');
 
-        menuToggle?.addEventListener('click', () => mobileMenu?.classList.add('active'));
-        menuClose?.addEventListener('click', () => mobileMenu?.classList.remove('active'));
+        menuToggle.addEventListener('click', () => mobileMenu.classList.add('active'));
+        menuClose.addEventListener('click', () => mobileMenu.classList.remove('active'));
 
+        // Cerrar al hacer click fuera
         document.addEventListener('click', (e) => {
-            if (
-                mobileMenu?.classList.contains('active') &&
-                !mobileMenu.contains(e.target) &&
-                !menuToggle?.contains(e.target)
-            ) {
+            if (mobileMenu.classList.contains('active') && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
                 mobileMenu.classList.remove('active');
             }
         });
@@ -380,15 +313,13 @@
         const btnRechazar = document.getElementById('btnRechazarCookies');
         const recordarme = document.querySelector('input[name="remember"]');
 
-        if (!cookies) return;
-
         function guardarCookie(nombre, valor, dias) {
-            const date = new Date();
-            date.setTime(date.getTime() + dias * 24 * 60 * 60 * 1000);
-            document.cookie = `${nombre}=${valor}; expires=${date.toUTCString()}; path=/; SameSite=Lax`;
+            const fecha = new Date();
+            fecha.setTime(fecha.getTime() + dias * 24 * 60 * 60 * 1000);
+            document.cookie = `${nombre}=${valor}; expires=${fecha.toUTCString()}; path=/; SameSite=Lax`;
         }
 
-        function cookieGuardada(nombre) {
+        function existeCookie(nombre) {
             return document.cookie.includes(`${nombre}=`);
         }
 
@@ -397,7 +328,7 @@
             setTimeout(() => cookies.style.display = 'none', 400);
         }
 
-        if (!cookieGuardada('cookieConsent')) {
+        if (!existeCookie('cookieConsent')) {
             cookies.classList.add('visible');
         }
 
@@ -419,8 +350,7 @@
             btnInfo.textContent = abierto ? 'Ocultar info' : 'Mas informacion';
             btnInfo.setAttribute('aria-expanded', abierto);
         });
-    });
-</script>
-@stack('scripts')
+    </script>
+    @stack('scripts')
 </body>
 </html>
