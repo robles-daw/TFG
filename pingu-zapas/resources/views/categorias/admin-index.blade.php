@@ -53,6 +53,6 @@
             </table>
         </div>
 
-        <div style="margin-top: 24px;">{{ $categorias->links() }}</div>
+        {{ $categorias->links() }}
     </div>
 @endsection

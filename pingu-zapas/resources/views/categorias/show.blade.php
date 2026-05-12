@@ -10,10 +10,10 @@
                     <img src="{{ $categoria->image_url }}" alt="{{ $categoria->nombre }}">
                 </div>
                 <div>
-                    <span class="badge">Categoria</span>
+                    <span class="badge">Categoría</span>
                     <h1 class="page-title">{{ $categoria->nombre }}</h1>
                     <p class="page-subtitle">{{ $categoria->descripcion }}</p>
-                    <a href="{{ route('zapatillas.index', ['categoria' => $categoria->slug]) }}" class="btn btn-primary">Ver productos</a>
+                    <a href="{{ route('zapatillas.index', ['categoria' => $categoria->slug]) }}" class="btn btn-primary">Ver productos de esta categoría</a>
                 </div>
             </div>
         </section>
@@ -34,7 +34,7 @@
                         <p class="muted">{{ number_format($zapatilla->precio, 2) }} €</p>
                     </a>
                 @empty
-                    <div class="panel" style="padding: 24px;">No hay productos activos en esta categoria.</div>
+                    <div class="panel" style="padding: 24px;">Actualmente no hay productos disponibles en esta categoría.</div>
                 @endforelse
             </div>
         </section>

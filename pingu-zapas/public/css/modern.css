@@ -584,73 +584,71 @@ th {
     .footer-bottom { flex-direction: column; gap: 16px; }
 }
 
-.pagination-nav {
+.paginacion-contenedor {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
     justify-content: center;
     width: 100%;
+    margin-top: 40px;
 }
 
-.pagination {
+.paginacion {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     list-style: none;
     padding: 0;
-    margin: 40px 0 0;
+    margin: 0;
     gap: 8px;
 }
 
-.pagination .page-item .page-link {
+.paginacion-item {
+    list-style: none;
+}
+
+.paginacion-boton {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 44px;
+    min-width: 46px;
     height: 44px;
     padding: 0 16px;
-    border-radius: 12px;
-    background: var(--panel-alt);
-    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     color: var(--muted);
     font-weight: 600;
     font-size: 0.95rem;
+    text-decoration: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.pagination .page-item:first-child .page-link,
-.pagination .page-item:last-child .page-link {
-    border-radius: 12px;
-}
-
-.pagination .page-item.active .page-link {
+.paginacion-item.activa .paginacion-boton {
     background: var(--accent);
     border-color: var(--accent);
     color: white;
     box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
 }
 
-.pagination .page-item.disabled .page-link {
-    opacity: 0.4;
+.paginacion-item.desactivado .paginacion-boton {
+    opacity: 0.45;
     cursor: not-allowed;
     background: transparent;
 }
 
-.pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+.paginacion-item:not(.activa):not(.desactivado) .paginacion-boton:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent);
     color: var(--text);
     transform: translateY(-2px);
 }
 
-/* Fix for the "Showing X to Y of Z results" text that Bootstrap 5 might include */
-.pagination-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-}
-
-.pagination-info {
+.paginacion-texto {
     color: var(--muted);
     font-size: 0.9rem;
+    margin: 0;
 }
 
 /* Responsive Design Refactor */

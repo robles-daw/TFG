@@ -7,7 +7,7 @@
         <div class="page-header">
             <div>
                 <h1 class="page-title">Noticias</h1>
-                <p class="page-subtitle">Mantente al día con los últimos lanzamientos y tendencias en sneakers.</p>
+                <p class="page-subtitle">Sigue las novedades, lanzamientos y tendencias que marcan el mundo sneaker.</p>
             </div>
         </div>
         <div class="news-grid">
@@ -25,6 +25,6 @@
                 </a>
             @endforeach
         </div>
-        <div style="margin-top: 40px;">{{ $noticias->links() }}</div>
+        {{ $noticias->links() }}
     </div>
 @endsection

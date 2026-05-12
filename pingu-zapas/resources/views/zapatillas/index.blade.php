@@ -1,13 +1,13 @@
 @extends('layout.master')
 
-@section('title', 'Catalogo | Pingu Zapas')
+@section('title', 'Catálogo | Pingu Zapas')
 
 @section('content')
     <div class="container">
         <div class="page-header">
             <div>
-                <h1 class="page-title">Catalogo</h1>
-                <p class="page-subtitle">Encuentra el par perfecto entre nuestra selección exclusiva.</p>
+                <h1 class="page-title">Catálogo</h1>
+                <p class="page-subtitle">Filtra nuestra selección y encuentra el par que encaja con tu estilo, talla y presupuesto.</p>
             </div>
         </div>
 
@@ -19,7 +19,7 @@
                             <i class="fas fa-search" style="color: var(--accent);"></i> Buscar
                         </h3>
                         <div class="field">
-                            <input id="q" type="text" name="q" value="{{ request('q') }}" placeholder="Marca, nombre..." style="background: rgba(255,255,255,0.03);">
+                            <input id="q" type="text" name="q" value="{{ request('q') }}" placeholder="Buscar por marca, modelo o nombre" style="background: rgba(255,255,255,0.03);">
                         </div>
                     </div>
 
@@ -41,7 +41,7 @@
 
                     <div>
                         <h3 style="font-size: 1.1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-                            <i class="fas fa-sliders-h" style="color: var(--accent);"></i> Talla y Precio
+                            <i class="fas fa-sliders-h" style="color: var(--accent);"></i> Talla y precio
                         </h3>
                         <div class="field" style="margin-bottom: 12px;">
                             <select id="talla" name="talla">
@@ -53,17 +53,17 @@
                         </div>
                         <div class="grid-2">
                             <div class="field">
-                                <input id="precio_min" type="number" step="0.01" name="precio_min" value="{{ request('precio_min', floor($precioMin)) }}" placeholder="Min">
+                                <input id="precio_min" type="number" step="0.01" name="precio_min" value="{{ request('precio_min', floor($precioMin)) }}" placeholder="Precio mínimo">
                             </div>
                             <div class="field">
-                                <input id="precio_max" type="number" step="0.01" name="precio_max" value="{{ request('precio_max', ceil($precioMax)) }}" placeholder="Max">
+                                <input id="precio_max" type="number" step="0.01" name="precio_max" value="{{ request('precio_max', ceil($precioMax)) }}" placeholder="Precio máximo">
                             </div>
                         </div>
                     </div>
 
                     <div style="display: grid; gap: 10px;">
-                        <button class="btn btn-primary" type="submit" style="width: 100%;">Filtrar Resultados</button>
-                        <a href="{{ route('zapatillas.index') }}" class="btn btn-ghost" style="width: 100%;">Limpiar</a>
+                        <button class="btn btn-primary" type="submit" style="width: 100%;">Aplicar filtros</button>
+                        <a href="{{ route('zapatillas.index') }}" class="btn btn-ghost" style="width: 100%;">Borrar filtros</a>
                     </div>
                 </form>
             </aside>
@@ -96,13 +96,13 @@
                     @empty
                         <div class="panel" style="padding: 48px; text-align: center; grid-column: 1 / -1;">
                             <i class="fas fa-search" style="font-size: 3rem; color: var(--line); margin-bottom: 16px;"></i>
-                            <h3>Sin resultados</h3>
-                            <p class="muted">Prueba con otra combinación de filtros.</p>
+                            <h3>No hemos encontrado resultados</h3>
+                            <p class="muted">Prueba a modificar la búsqueda o a ampliar los filtros seleccionados.</p>
                         </div>
                     @endforelse
                 </div>
 
-                <div style="margin-top: 40px;">{{ $zapatillas->links() }}</div>
+                {{ $zapatillas->links() }}
             </div>
         </div>
     </div>

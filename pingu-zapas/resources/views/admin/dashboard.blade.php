@@ -7,7 +7,7 @@
         <div class="page-header">
             <div>
                 <h1 class="page-title">Dashboard</h1>
-                <p class="page-subtitle">Resumen rápido de la tienda seeded.</p>
+                <p class="page-subtitle">Resumen general de ventas, pedidos y actividad reciente de la tienda.</p>
             </div>
         </div>
 
@@ -16,7 +16,7 @@
             <div class="metric"><span class="muted">Pedidos</span><h3>{{ $stats['pedidos'] }}</h3></div>
             <div class="metric"><span class="muted">Usuarios</span><h3>{{ $stats['usuarios'] }}</h3></div>
             <div class="metric"><span class="muted">Productos</span><h3>{{ $stats['productos'] }}</h3></div>
-            <div class="metric"><span class="muted">Categorias</span><h3>{{ $stats['categorias'] }}</h3></div>
+            <div class="metric"><span class="muted">Categorías</span><h3>{{ $stats['categorias'] }}</h3></div>
             <div class="metric"><span class="muted">Noticias</span><h3>{{ $stats['noticias'] }}</h3></div>
         </div>
 
@@ -49,7 +49,7 @@
 
         <section class="section">
             <div class="section-head">
-                <h2 class="page-title" style="font-size: 1.8rem;">Últimos Pedidos</h2>
+                <h2 class="page-title" style="font-size: 1.8rem;">Últimos pedidos</h2>
                 <a href="{{ route('admin.pedidos.index') }}" class="btn btn-ghost">Ver todos</a>
             </div>
             <div class="table-wrap">

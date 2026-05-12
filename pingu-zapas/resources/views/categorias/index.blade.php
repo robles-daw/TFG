@@ -1,13 +1,13 @@
 @extends('layout.master')
 
-@section('title', 'Categorias | Pingu Zapas')
+@section('title', 'Categorías | Pingu Zapas')
 
 @section('content')
     <div class="container">
         <div class="page-header">
             <div>
-                <h1 class="page-title">Categorias</h1>
-                <p class="page-subtitle">Explora nuestras colecciones y descubre tu estilo propio.</p>
+                <h1 class="page-title">Categorías</h1>
+                <p class="page-subtitle">Explora nuestras colecciones y accede directamente al estilo que estás buscando.</p>
             </div>
         </div>
 
@@ -24,6 +24,6 @@
             @endforeach
         </div>
 
-        <div style="margin-top: 40px;">{{ $categorias->links() }}</div>
+        {{ $categorias->links() }}
     </div>
 @endsection

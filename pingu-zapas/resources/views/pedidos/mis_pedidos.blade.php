@@ -17,6 +17,6 @@
                 </a>
             @endforeach
         </div>
-        <div style="margin-top: 24px;">{{ $pedidos->links() }}</div>
+        {{ $pedidos->links() }}
     </div>
 @endsection

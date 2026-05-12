@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/modern.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/modern.css') }}?v=2">
     <link rel="icon" href="{{ asset('img/logoZapas.png') }}?v=2" type="image/png">
     @stack('styles')
     <style>
@@ -133,8 +133,8 @@
 
             <div class="nav-links">
                 <a href="{{ route('index') }}">Inicio</a>
-                <a href="{{ route('zapatillas.index') }}">Catalogo</a>
-                <a href="{{ route('categorias.index') }}">Categorias</a>
+                <a href="{{ route('zapatillas.index') }}">Catálogo</a>
+                <a href="{{ route('categorias.index') }}">Categorías</a>
                 <a href="{{ route('noticias.index') }}">Noticias</a>
                 <a href="{{ route('contacto.index') }}">Contacto</a>
                 @auth
@@ -197,7 +197,7 @@
                     <img src="{{ asset('img/logoZapas.png') }}" alt="Pingu Zapas">
                     Pingu<span>Zapas</span>
                 </div>
-                <p>Tu destino premium para sneakers de edición limitada y lanzamientos exclusivos. Elevamos tu estilo, paso a paso.</p>
+                <p>Tu tienda de confianza para descubrir sneakers seleccionadas, lanzamientos especiales y modelos pensados para el día a día.</p>
                 <div class="social-links">
                     <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
@@ -210,17 +210,17 @@
                 <a href="{{ route('index') }}">Inicio</a>
                 <a href="{{ route('zapatillas.index') }}">Catálogo</a>
                 <a href="{{ route('categorias.index') }}">Categorías</a>
-                <a href="{{ route('noticias.index') }}">Blog de Noticias</a>
+                <a href="{{ route('noticias.index') }}">Noticias y guías</a>
             </div>
             <div>
                 <h4>Mi Cuenta</h4>
                 @auth
-                    <a href="{{ route('perfil.index') }}">Panel de Usuario</a>
+                    <a href="{{ route('perfil.index') }}">Mi perfil</a>
                     <a href="{{ route('pedidos.mis_pedidos') }}">Mis Pedidos</a>
                     <a href="#">Lista de Deseos</a>
                 @else
-                    <a href="{{ route('login') }}">Iniciar Sesión</a>
-                    <a href="{{ route('register') }}">Crear una Cuenta</a>
+                    <a href="{{ route('login') }}">Iniciar sesión</a>
+                    <a href="{{ route('register') }}">Crear una cuenta</a>
                 @endauth
             </div>
         </div>
@@ -250,9 +250,9 @@
             @auth
                 @if(auth()->user()->rol === 'admin')
                     <a href="{{ route('admin.dashboard') }}" style="color: var(--accent);">Panel Admin</a>
-                    <a href="{{ route('admin.zapatillas.index') }}">Gestionar Productos</a>
-                    <a href="{{ route('admin.categorias.index') }}">Gestionar Categorías</a>
-                    <a href="{{ route('admin.pedidos.index') }}">Gestionar Pedidos</a>
+                    <a href="{{ route('admin.zapatillas.index') }}">Gestionar productos</a>
+                    <a href="{{ route('admin.categorias.index') }}">Gestionar categorías</a>
+                    <a href="{{ route('admin.pedidos.index') }}">Gestionar pedidos</a>
                 @else
                     <a href="{{ route('perfil.index') }}">Mi Perfil</a>
                 @endif
@@ -261,8 +261,8 @@
                     <button type="submit" class="btn btn-ghost" style="width: 100%;">Cerrar Sesión</button>
                 </form>
             @else
-                <a href="{{ route('login') }}">Iniciar Sesión</a>
-                <a href="{{ route('register') }}" class="btn btn-primary" style="margin-top: 8px;">Crear Cuenta</a>
+                <a href="{{ route('login') }}">Iniciar sesión</a>
+                <a href="{{ route('register') }}" class="btn btn-primary" style="margin-top: 8px;">Crear cuenta</a>
             @endauth
         </div>
     </div>
@@ -270,22 +270,22 @@
     <section id="cookies" class="cookies" aria-live="polite">
         <h2>Cookies en Pingu Zapas</h2>
         <p>
-            Usamos cookies necesarias para mantener tu sesion y, si aceptas, recordar tu perfil para que no tengas que iniciar sesion cada vez.
+            Usamos cookies necesarias para mantener tu sesión y, si aceptas, recordar tu perfil en este navegador.
         </p>
 
         <div id="infoCookies" class="cookies-info">
             <p>
-                Las cookies de sesion mantienen tu carrito, tu acceso y la seguridad de la cuenta. Si aceptas, tambien podremos guardar una cookie de recuerdo para mantener tu perfil activo durante mas tiempo en este navegador.
+                Las cookies de sesión nos ayudan a conservar tu carrito, proteger tu acceso y mejorar la experiencia de navegación. Las cookies opcionales permiten recordar tu perfil durante más tiempo.
             </p>
             <ul>
                 <li>No vendemos tus datos personales.</li>
                 <li>Puedes rechazar cookies opcionales y seguir navegando.</li>
-                <li>Si cierras sesion manualmente, el recuerdo de acceso se elimina.</li>
+                <li>Si cierras sesión manualmente, el recuerdo de acceso se elimina.</li>
             </ul>
         </div>
 
         <div class="cookies-botones">
-            <button type="button" id="btnInfoCookies" class="btn-cookies" aria-expanded="false" aria-controls="infoCookies">Mas informacion</button>
+            <button type="button" id="btnInfoCookies" class="btn-cookies" aria-expanded="false" aria-controls="infoCookies">Más información</button>
             <button type="button" id="btnRechazarCookies" class="btn-cookies">Rechazar</button>
             <button type="button" id="btnAceptarCookies" class="btn-aceptar-cookies">Aceptar</button>
         </div>
@@ -347,7 +347,7 @@
         btnInfo.addEventListener('click', () => {
             infoCookies.classList.toggle('visible');
             const abierto = infoCookies.classList.contains('visible');
-            btnInfo.textContent = abierto ? 'Ocultar info' : 'Mas informacion';
+            btnInfo.textContent = abierto ? 'Ocultar información' : 'Más información';
             btnInfo.setAttribute('aria-expanded', abierto);
         });
     </script>

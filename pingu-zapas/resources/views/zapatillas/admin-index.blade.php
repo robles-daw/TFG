@@ -63,6 +63,6 @@
                 </tbody>
             </table>
         </div>
-        <div style="margin-top: 24px;">{{ $zapatillas->links() }}</div>
+        {{ $zapatillas->links() }}
     </div>
 @endsection

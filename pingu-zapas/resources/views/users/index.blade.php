@@ -56,6 +56,6 @@
                 </tbody>
             </table>
         </div>
-        <div style="margin-top: 24px;">{{ $users->links() }}</div>
+        {{ $users->links() }}
     </div>
 @endsection

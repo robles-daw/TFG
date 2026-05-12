@@ -12,7 +12,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Codigo</th>
+                        <th>Código</th>
                         <th>Tipo</th>
                         <th>Valor</th>
                         <th>Activo</th>
@@ -41,7 +41,7 @@
                                     <a href="{{ route('admin.descuentos.edit', $descuento) }}" class="btn btn-ghost" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form method="POST" action="{{ route('admin.descuentos.destroy', $descuento) }}" onsubmit="return confirm('¿Estás seguro?')">
+                                    <form method="POST" action="{{ route('admin.descuentos.destroy', $descuento) }}" onsubmit="return confirm('¿Seguro que quieres eliminar este descuento?')">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-ghost" type="submit" title="Eliminar" style="color: var(--danger);">
@@ -55,6 +55,6 @@
                 </tbody>
             </table>
         </div>
-        <div style="margin-top: 24px;">{{ $descuentos->links() }}</div>
+        {{ $descuentos->links() }}
     </div>
 @endsection

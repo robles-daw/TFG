@@ -6,11 +6,11 @@
     <div class="container">
         <section class="hero">
             <div>
-                <h1>Eleva tu Estilo con la Mejor Selección de Sneakers.</h1>
-                <p>Descubre nuestra colección exclusiva de calzado urbano y deportivo. Diseños vanguardistas, comodidad máxima y lanzamientos de edición limitada.</p>
+                <h1>Sneakers seleccionadas para moverte con estilo.</h1>
+                <p>Descubre una selección cuidada de calzado urbano y deportivo: modelos actuales, comodidad diaria y lanzamientos pensados para destacar.</p>
                 <div class="hero-actions">
-                    <a href="{{ route('zapatillas.index') }}" class="btn btn-primary">Ver catalogo</a>
-                    <a href="{{ route('categorias.index') }}" class="btn btn-ghost">Explorar categorias</a>
+                    <a href="{{ route('zapatillas.index') }}" class="btn btn-primary">Ver catálogo</a>
+                    <a href="{{ route('categorias.index') }}" class="btn btn-ghost">Explorar categorías</a>
                 </div>
             </div>
             <div class="hero-image" style="background: url('{{ asset('img/fondoDurisimo.png') }}') no-repeat center center; background-size: cover; display: flex; align-items: center; justify-content: center; padding: 40px; border-radius: 24px; overflow: hidden; position: relative;">
@@ -22,8 +22,8 @@
         <section class="section">
             <div class="page-header">
                 <div>
-                    <h2 class="page-title">Categorias activas</h2>
-                    <p class="page-subtitle">Encuentra el estilo que mejor se adapta a tu ritmo de vida.</p>
+                    <h2 class="page-title">Compra por categoría</h2>
+                    <p class="page-subtitle">Encuentra rápidamente el tipo de zapatilla que encaja con tu forma de vestir, entrenar o moverte.</p>
                 </div>
             </div>
             <div class="cards-grid">
@@ -43,10 +43,10 @@
         <section class="section">
             <div class="page-header">
                 <div>
-                    <h2 class="page-title">Destacadas</h2>
-                    <p class="page-subtitle">Los modelos más deseados de la temporada seleccionados para ti.</p>
+                    <h2 class="page-title">Modelos destacados</h2>
+                    <p class="page-subtitle">Una selección de novedades y favoritos elegidos por su diseño, versatilidad y demanda.</p>
                 </div>
-                <a href="{{ route('zapatillas.index') }}" class="btn btn-ghost">Ver todo</a>
+                <a href="{{ route('zapatillas.index') }}" class="btn btn-ghost">Ver catálogo completo</a>
             </div>
             <div class="product-grid">
                 @foreach($destacadas as $zapatilla)
@@ -71,8 +71,8 @@
         <section class="section">
             <div class="page-header">
                 <div>
-                    <h2 class="page-title">Noticias</h2>
-                    <p class="page-subtitle">Últimas novedades, tendencias y consejos del mundo sneaker.</p>
+                    <h2 class="page-title">Actualidad sneaker</h2>
+                    <p class="page-subtitle">Lanzamientos, tendencias y consejos para elegir mejor tu próximo par.</p>
                 </div>
             </div>
             <div class="news-grid">
