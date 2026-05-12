@@ -7,7 +7,7 @@
         <div class="page-header">
             <div>
                 <h1 class="page-title">Catalogo</h1>
-                <p class="page-subtitle">Filtros y conteos alimentados por la base de datos.</p>
+                <p class="page-subtitle">Encuentra el par perfecto entre nuestra selección exclusiva.</p>
             </div>
         </div>
 

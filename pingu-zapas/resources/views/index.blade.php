@@ -6,8 +6,8 @@
     <div class="container">
         <section class="hero">
             <div>
-                <h1>Filtros, categorias y usuarios listos para moverse con datos reales.</h1>
-                <p>El catalogo arranca con seeders de marcas ficticias, tallas con stock, noticias y pedidos de ejemplo para que puedas enseñar una tienda completa sin meter marcas reales.</p>
+                <h1>Eleva tu Estilo con la Mejor Selección de Sneakers.</h1>
+                <p>Descubre nuestra colección exclusiva de calzado urbano y deportivo. Diseños vanguardistas, comodidad máxima y lanzamientos de edición limitada.</p>
                 <div class="hero-actions">
                     <a href="{{ route('zapatillas.index') }}" class="btn btn-primary">Ver catalogo</a>
                     <a href="{{ route('categorias.index') }}" class="btn btn-ghost">Explorar categorias</a>
@@ -23,7 +23,7 @@
             <div class="page-header">
                 <div>
                     <h2 class="page-title">Categorias activas</h2>
-                    <p class="page-subtitle">Cada bloque nace de la tabla `categorias` y cuenta producto activo real.</p>
+                    <p class="page-subtitle">Encuentra el estilo que mejor se adapta a tu ritmo de vida.</p>
                 </div>
             </div>
             <div class="cards-grid">
@@ -44,7 +44,7 @@
             <div class="page-header">
                 <div>
                     <h2 class="page-title">Destacadas</h2>
-                    <p class="page-subtitle">Los destacados salen de la tabla `zapatillas`.</p>
+                    <p class="page-subtitle">Los modelos más deseados de la temporada seleccionados para ti.</p>
                 </div>
                 <a href="{{ route('zapatillas.index') }}" class="btn btn-ghost">Ver todo</a>
             </div>
@@ -72,7 +72,7 @@
             <div class="page-header">
                 <div>
                     <h2 class="page-title">Noticias</h2>
-                    <p class="page-subtitle">Tambien sembradas para el backend y el escaparate público.</p>
+                    <p class="page-subtitle">Últimas novedades, tendencias y consejos del mundo sneaker.</p>
                 </div>
             </div>
             <div class="news-grid">

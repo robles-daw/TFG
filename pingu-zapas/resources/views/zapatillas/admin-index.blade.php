@@ -7,7 +7,7 @@
         <div class="page-header">
             <div>
                 <h1 class="page-title">Gestion de zapatillas</h1>
-                <p class="page-subtitle">Productos, precios y stock por talla.</p>
+                <p class="page-subtitle">Gestiona el catálogo de productos y el stock disponible.</p>
             </div>
             <a href="{{ route('admin.zapatillas.create') }}" class="btn btn-primary">Nueva zapatilla</a>
         </div>

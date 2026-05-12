@@ -7,7 +7,7 @@
         <div class="page-header">
             <div>
                 <h1 class="page-title">Gestion de categorias</h1>
-                <p class="page-subtitle">Alta, edicion y control del escaparate.</p>
+                <p class="page-subtitle">Organiza las categorías de productos de la tienda.</p>
             </div>
             <a href="{{ route('admin.categorias.create') }}" class="btn btn-primary">Nueva categoria</a>
         </div>

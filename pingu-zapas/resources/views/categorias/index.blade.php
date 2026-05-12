@@ -7,7 +7,7 @@
         <div class="page-header">
             <div>
                 <h1 class="page-title">Categorias</h1>
-                <p class="page-subtitle">Listado construido desde la tabla `categorias`.</p>
+                <p class="page-subtitle">Explora nuestras colecciones y descubre tu estilo propio.</p>
             </div>
         </div>
 

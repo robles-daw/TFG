@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/modern.css') }}">
+    <link rel="icon" href="{{ asset('img/logoZapas.png') }}?v=2" type="image/png">
     @stack('styles')
 </head>
 <body>
@@ -114,14 +115,6 @@
                     <a href="{{ route('login') }}">Iniciar Sesión</a>
                     <a href="{{ route('register') }}">Crear una Cuenta</a>
                 @endauth
-            </div>
-            <div>
-                <h4>Newsletter</h4>
-                <p>Suscríbete para recibir acceso prioritario a nuevos lanzamientos.</p>
-                <form onsubmit="return false;" style="margin-top: 12px; display: flex; gap: 8px;">
-                    <input type="email" placeholder="tu@email.com" style="flex: 1; padding: 10px 14px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--line); color: white;">
-                    <button class="btn btn-primary" style="padding: 10px;"><i class="fas fa-paper-plane"></i></button>
-                </form>
             </div>
         </div>
         <div class="container footer-bottom">
