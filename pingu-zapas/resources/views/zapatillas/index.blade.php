@@ -41,7 +41,7 @@
 
                     <div>
                         <h3 style="font-size: 1.1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-                            <i class="fas fa-sliders-h" style="color: var(--accent);"></i> Talla y Precio
+                            <i class="fas fa-sliders-h" style="color: var(--accent);"></i> Talla y Precio.
                         </h3>
                         <div class="field" style="margin-bottom: 12px;">
                             <select id="talla" name="talla">
