@@ -58,11 +58,11 @@ class DatabaseSeeder extends Seeder
         });
 
         $categorias = collect([
-            ['nombre' => 'Urbana', 'descripcion' => 'Modelos para uso diario con perfil moderno.', 'imagen' => 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80'],
-            ['nombre' => 'Running', 'descripcion' => 'Siluetas ligeras para ritmo constante y comodidad.', 'imagen' => 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=900&q=80'],
-            ['nombre' => 'Court', 'descripcion' => 'Inspiradas en pista y movimiento lateral.', 'imagen' => 'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?auto=format&fit=crop&w=900&q=80'],
-            ['nombre' => 'Skate', 'descripcion' => 'Suela firme y estructura reforzada para tabla.', 'imagen' => 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=900&q=80'],
-            ['nombre' => 'Trail', 'descripcion' => 'Agarre extra y materiales resistentes para exterior.', 'imagen' => 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=900&q=80'],
+            ['nombre' => 'Casual', 'descripcion' => 'Modelos para uso diario con perfil moderno.', 'imagen' => ''],
+            ['nombre' => 'Running', 'descripcion' => 'Siluetas ligeras para ritmo constante y comodidad.', 'imagen' => ''],
+            ['nombre' => 'Basket', 'descripcion' => 'Inspiradas en pista y movimiento lateral.', 'imagen' => ''],
+            ['nombre' => 'Skate', 'descripcion' => 'Suela firme y estructura reforzada para tabla.', 'imagen' => ''],
+            ['nombre' => 'Chanclas', 'descripcion' => 'Nada emjor y más comodo ue unas chanclas para la piscina o playa.', 'imagen' => ''],
         ])->map(fn (array $categoria) => Categoria::create([
             ...$categoria,
             'slug' => Str::slug($categoria['nombre']),
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
 
         $catalogo = [
             [
-                'categoria' => 'Urbana',
+                'categoria' => 'Casual',
                 'nombre' => 'Astra Loop One',
                 'marca' => 'Astra',
                 'modelo' => 'Loop',
@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
                 'tallas' => [38 => 4, 39 => 6, 40 => 7, 41 => 5, 42 => 3, 43 => 2],
             ],
             [
-                'categoria' => 'Urbana',
+                'categoria' => 'Casual',
                 'nombre' => 'Nebula Frame Low',
                 'marca' => 'Nebula',
                 'modelo' => 'Frame',
@@ -125,7 +125,7 @@ class DatabaseSeeder extends Seeder
                 'tallas' => [39 => 2, 40 => 5, 41 => 7, 42 => 5, 43 => 5, 44 => 3],
             ],
             [
-                'categoria' => 'Court',
+                'categoria' => 'Basket',
                 'nombre' => 'Orbit Pivot Mid',
                 'marca' => 'Orbit',
                 'modelo' => 'Pivot Mid',
@@ -137,7 +137,7 @@ class DatabaseSeeder extends Seeder
                 'tallas' => [40 => 3, 41 => 4, 42 => 6, 43 => 5, 44 => 2],
             ],
             [
-                'categoria' => 'Court',
+                'categoria' => 'Basket',
                 'nombre' => 'Prisma Control Low',
                 'marca' => 'Prisma',
                 'modelo' => 'Control Low',
@@ -171,31 +171,7 @@ class DatabaseSeeder extends Seeder
                 'imagen_principal' => 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=900&q=80',
                 'imagenes_extra' => [],
                 'tallas' => [39 => 2, 40 => 4, 41 => 7, 42 => 4, 43 => 2],
-            ],
-            [
-                'categoria' => 'Trail',
-                'nombre' => 'Ridge Horizon X',
-                'marca' => 'Ridge',
-                'modelo' => 'Horizon X',
-                'precio' => 182.20,
-                'destacado' => true,
-                'descripcion' => 'Taqueado profundo y upper protegido para rutas mixtas.',
-                'imagen_principal' => 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=900&q=80',
-                'imagenes_extra' => [],
-                'tallas' => [40 => 4, 41 => 6, 42 => 6, 43 => 6, 44 => 4, 45 => 2],
-            ],
-            [
-                'categoria' => 'Trail',
-                'nombre' => 'Kite Terrain Flow',
-                'marca' => 'Kite',
-                'modelo' => 'Terrain Flow',
-                'precio' => 167.80,
-                'destacado' => false,
-                'descripcion' => 'Drop equilibrado y traccion constante para salidas rapidas.',
-                'imagen_principal' => 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=900&q=80',
-                'imagenes_extra' => [],
-                'tallas' => [39 => 2, 40 => 5, 41 => 5, 42 => 6, 43 => 4, 44 => 2],
-            ],
+            ]
         ];
 
         $zapatillas = collect($catalogo)->map(function (array $item) use ($categorias) {
@@ -275,7 +251,7 @@ class DatabaseSeeder extends Seeder
                 'user' => $clientes[2],
                 'estado' => 'entregado',
                 'items' => [
-                    ['zapatilla' => $zapatillas[8], 'talla' => 43, 'cantidad' => 1],
+                    ['zapatilla' => $zapatillas[5], 'talla' => 43, 'cantidad' => 1],
                     ['zapatilla' => $zapatillas[6], 'talla' => 41, 'cantidad' => 2],
                 ],
                 'descuento' => $descuentos[1],
