@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="panel" style="overflow: hidden; height: 300px; padding: 0;">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45183.770532632414!2d-93.2970190468396!3d44.94395949586554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87f627e247d92a67%3A0xc3d7f341d5e83553!2sPowderhorn%2C%20Minneapolis%2C%20Minnesota%2C%20EE.%20UU.!5e0!3m2!1ses!2ses!4v1776709596275!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2721.2491179065614!2d-0.8905526244191054!3d41.64839597976553!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5914c2c65a9721%3A0xf6b7a037bfbb0528!2sCalle%20de%20Almagro%2C%2050004%20Zaragoza!5e1!3m2!1ses!2ses!4v1778680833913!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
