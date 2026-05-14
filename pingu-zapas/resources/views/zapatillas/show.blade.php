@@ -141,13 +141,13 @@
 
 
 
-                    @if(!empty($zapatilla->imagenes_extra))
+                    @if(!empty($zapatilla->extra_image_urls))
                         <div class="section">
                             <h3>Mas imagenes</h3>
                             <div class="grid-2">
-                                @foreach($zapatilla->imagenes_extra as $imagen)
+                                @foreach($zapatilla->extra_image_urls as $url)
                                     <div class="product-image" style="height: 180px;">
-                                        <img src="{{ $imagen }}" alt="Detalle {{ $zapatilla->nombre }}">
+                                        <img src="{{ $url }}" alt="Detalle {{ $zapatilla->nombre }}">
                                     </div>
                                 @endforeach
                             </div>

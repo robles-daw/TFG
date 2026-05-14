@@ -26,7 +26,12 @@ class Categoria extends Model
             return $this->imagen;
         }
 
-        return asset('storage/' . $this->imagen);
+        // Si la ruta no empieza por 'categorias/' y no es una URL, lo añadimos automáticamente
+        $path = str_starts_with($this->imagen, 'categorias/') 
+            ? $this->imagen 
+            : 'categorias/' . $this->imagen;
+
+        return asset('storage/' . $path);
     }
 
     public function zapatillas()

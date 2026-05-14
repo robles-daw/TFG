@@ -71,7 +71,7 @@ class ZapatillaController extends Controller
             default => $query->orderByDesc('destacado')->latest(),
         };
 
-        $zapatillas = $query->paginate(9)->withQueryString();
+        $zapatillas = $query->paginate(6)->withQueryString();
 
         return view('zapatillas.index', compact(
             'zapatillas',

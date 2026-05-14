@@ -12,7 +12,7 @@
         </div>
 
         <div class="catalog-layout">
-            <aside class="panel sidebar" style="padding: 24px; border-radius: 24px; height: fit-content; position: sticky; top: 100px;">
+            <aside class="panel sidebar">
                 <form method="GET" class="filters-form" style="display: grid; gap: 24px;">
                     <div>
                         <h3 style="font-size: 1.1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
@@ -72,7 +72,7 @@
                 <div class="product-grid">
                     @forelse($zapatillas as $zapatilla)
                         <a class="product-card" href="{{ route('zapatillas.show', $zapatilla) }}" style="padding: 14px; transition: 0.3s ease;">
-                            <div class="product-image" style="height: 240px; border-radius: 18px; overflow: hidden; margin-bottom: 16px; position: relative;">
+                            <div class="product-image">
                                 <img src="{{ $zapatilla->main_image_url }}" alt="{{ $zapatilla->nombre }}" style="transition: transform 0.5s ease;">
                                 @if($zapatilla->destacado)
                                     <span style="position: absolute; top: 12px; right: 12px; background: var(--accent); color: white; padding: 4px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 700;">DESTACADO</span>

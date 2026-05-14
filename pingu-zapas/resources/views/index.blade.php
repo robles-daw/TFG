@@ -30,7 +30,7 @@
                 @foreach($categorias as $categoria)
                     <a class="category-card" href="{{ route('zapatillas.index', ['categoria' => $categoria->slug]) }}">
                         <div class="category-cover">
-                            <img src="{{ $categoria->imagen }}" alt="{{ $categoria->nombre }}">
+                            <img src="{{ $categoria->image_url }}" alt="{{ $categoria->nombre }}">
                         </div>
                         <strong>{{ $categoria->nombre }}</strong>
                         <p class="muted">{{ $categoria->descripcion }}</p>
@@ -52,7 +52,7 @@
                 @foreach($destacadas as $zapatilla)
                     <a class="product-card" href="{{ route('zapatillas.show', $zapatilla) }}">
                         <div class="product-image">
-                            <img src="{{ $zapatilla->imagen_principal }}" alt="{{ $zapatilla->nombre }}">
+                            <img src="{{ $zapatilla->main_image_url }}" alt="{{ $zapatilla->nombre }}">
                             @if($zapatilla->tallasStock->where('stock', '>', 0)->isEmpty())
                                 <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 2;">
                                     <span style="background: white; color: black; padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 0.7rem; letter-spacing: 1px;">SIN STOCK</span>
@@ -78,8 +78,8 @@
             <div class="news-grid">
                 @foreach($noticias as $noticia)
                     <a class="news-card" href="{{ route('noticias.show', $noticia->slug) }}">
-                        <div class="news-cover" style="background-image: url('{{ $noticia->imagen_portada }}');">
-                            <img src="{{ $noticia->imagen_portada }}" alt="{{ $noticia->titulo }}">
+                        <div class="news-cover" style="background-image: url('{{ $noticia->image_url }}');">
+                            <img src="{{ $noticia->image_url }}" alt="{{ $noticia->titulo }}">
                         </div>
                         <div class="news-card-content">
                             <span class="badge" style="margin-bottom: 12px;">{{ ucfirst($noticia->categoria) }}</span>

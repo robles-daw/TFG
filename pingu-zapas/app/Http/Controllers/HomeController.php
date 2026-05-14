@@ -15,12 +15,12 @@ class HomeController extends Controller
             ->where('activo', true)
             ->where('destacado', true)
             ->latest()
-            ->take(4)
+            ->take(3)
             ->get();
 
         $categorias = Categoria::withCount(['zapatillas' => fn ($query) => $query->where('activo', true)])
             ->orderByDesc('zapatillas_count')
-            ->take(4)
+            ->take(3)
             ->get();
 
         $noticias = Noticia::where('publicado', true)

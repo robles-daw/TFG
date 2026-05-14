@@ -40,7 +40,7 @@ button, input, select, textarea { font: inherit; }
 .navbar {
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 100;
     backdrop-filter: blur(16px);
     background: rgba(8, 16, 25, 0.88);
     border-bottom: 1px solid var(--line);
@@ -252,8 +252,8 @@ button, input, select, textarea { font: inherit; }
 .product-grid,
 .news-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
 }
 
 .product-card,
@@ -267,10 +267,20 @@ button, input, select, textarea { font: inherit; }
 .product-card,
 .news-card,
 .category-card {
-    max-width: 420px;
+    width: 100%;
 }
 
-.product-image,
+.product-image {
+    height: 240px;
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .news-card {
     padding: 0;
     overflow: hidden;
@@ -320,8 +330,55 @@ button, input, select, textarea { font: inherit; }
 }
 
 .category-cover {
-    height: 220px;
-    margin-bottom: 14px;
+    height: 240px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+    margin-bottom: 16px;
+    background: var(--bg-soft);
+}
+
+.category-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
+}
+
+.category-card:hover .category-cover img {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .category-cover {
+        height: 180px;
+    }
+}
+
+.category-card h3 {
+    margin: 0 0 8px;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.category-card p {
+    flex-grow: 1;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .category-cover {
+        height: 200px;
+    }
 }
 
 .news-card-content {
@@ -345,9 +402,15 @@ button, input, select, textarea { font: inherit; }
 
 .sidebar {
     padding: 24px;
-    position: sticky;
-    top: 92px;
-    height: fit-content;
+}
+
+@media (min-width: 1025px) {
+    .sidebar {
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+        z-index: 10;
+    }
 }
 
 .sidebar .field select {
@@ -376,7 +439,7 @@ button, input, select, textarea { font: inherit; }
     font-size: 0.95rem;
 }
 
-.field input,
+.field input:not([type="checkbox"]):not([type="radio"]),
 .field textarea,
 .field select {
     width: 100%;
@@ -432,7 +495,23 @@ button, input, select, textarea { font: inherit; }
 .checkbox-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    width: fit-content;
+}
+
+.checkbox-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.checkbox-row span {
+    font-size: 0.95rem;
+    color: var(--text);
 }
 
 .table-wrap {
@@ -671,7 +750,7 @@ th {
     }
 
     .sidebar {
-        position: static;
+        position: static !important;
         margin-bottom: 24px;
     }
 }
